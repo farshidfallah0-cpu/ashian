@@ -1,0 +1,4 @@
+{
+  "extends": "@ashian/config/tsconfig/node.json",
+  "include": ["src"]
+}

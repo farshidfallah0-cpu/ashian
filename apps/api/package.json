@@ -1,0 +1,49 @@
+{
+  "name": "@ashian/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nest build",
+    "dev": "nest start --watch --preserveWatchOutput",
+    "start": "node dist/main.js",
+    "smoke": "node scripts/smoke.mjs",
+    "search:reindex": "node scripts/search-reindex.mjs",
+    "search:load": "node scripts/search-load.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@ashian/db": "workspace:*",
+    "@ashian/infra": "workspace:*",
+    "@ashian/search": "workspace:*",
+    "@ashian/shared": "workspace:*",
+    "@fastify/cookie": "^11.1.2",
+    "@fastify/helmet": "^13.1.1",
+    "@fastify/static": "^9.0.0",
+    "@nestjs/common": "^12.1.2",
+    "@nestjs/core": "^12.1.2",
+    "@nestjs/platform-fastify": "^12.1.2",
+    "@nestjs/swagger": "^12.0.2",
+    "@nestjs/throttler": "^6.7.1",
+    "fastify": "^5.12.5",
+    "jose": "^6.2.12",
+    "nestjs-pino": "^5.3.1",
+    "pino": "^10.4.0",
+    "pino-http": "^11.0.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@ashian/config": "workspace:*",
+    "@nestjs/cli": "^12.0.8",
+    "@nestjs/testing": "^12.1.2",
+    "@types/node": "^24.10.0",
+    "eslint": "^9.39.0",
+    "pino-pretty": "^13.2.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.3"
+  }
+}

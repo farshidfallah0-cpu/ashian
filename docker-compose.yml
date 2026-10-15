@@ -1,0 +1,83 @@
+# محیط توسعه‌ی کامل (INFRA_MODE=full). اجرا: pnpm infra:up
+name: ashian
+
+services:
+  postgres:
+    image: postgis/postgis:17-3.5-alpine
+    environment:
+      POSTGRES_USER: ashian
+      POSTGRES_PASSWORD: ashian
+      POSTGRES_DB: ashian
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ashian']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  pgbouncer:
+    image: edoburu/pgbouncer:v1.24.1-p1
+    environment:
+      DATABASE_URL: postgres://ashian:ashian@postgres:5432/ashian
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: 2000
+      DEFAULT_POOL_SIZE: 40
+      AUTH_TYPE: scram-sha-256
+    ports:
+      - '6432:5432'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  redis:
+    image: redis:7.4-alpine
+    command: ['redis-server', '--appendonly', 'yes', '--maxmemory-policy', 'noeviction']
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  typesense:
+    image: typesense/typesense:29.0
+    command: ['--data-dir', '/data', '--api-key', 'ashian-dev-key', '--enable-cors']
+    ports:
+      - '8108:8108'
+    volumes:
+      - typesense-data:/data
+
+  minio:
+    image: minio/minio:latest
+    command: ['server', '/data', '--console-address', ':9001']
+    environment:
+      MINIO_ROOT_USER: ashian
+      MINIO_ROOT_PASSWORD: ashian-dev-secret
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - minio-data:/data
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set local http://minio:9000 ashian ashian-dev-secret; do sleep 1; done;
+      mc mb --ignore-existing local/ashian-media;
+      mc anonymous set download local/ashian-media;
+      "
+
+volumes:
+  postgres-data:
+  redis-data:
+  typesense-data:
+  minio-data:
