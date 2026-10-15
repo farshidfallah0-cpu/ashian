@@ -1,0 +1,37 @@
+{
+  "name": "@ashian/infra",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ashian/shared": "workspace:*",
+    "@aws-sdk/client-s3": "^3.920.0",
+    "@aws-sdk/s3-presigned-post": "^3.920.0",
+    "blurhash": "^2.0.5",
+    "bullmq": "^6.3.11",
+    "ioredis": "^5.8.2",
+    "pg": "^8.23.1",
+    "sharp": "^0.35.5",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@ashian/config": "workspace:*",
+    "@types/node": "^24.10.0",
+    "eslint": "^9.39.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.3"
+  }
+}

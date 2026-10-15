@@ -1,0 +1,31 @@
+{
+  "name": "@ashian/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch --clear-screen=false src/main.ts",
+    "start": "node dist/main.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@ashian/db": "workspace:*",
+    "@ashian/infra": "workspace:*",
+    "@ashian/search": "workspace:*",
+    "@ashian/shared": "workspace:*",
+    "pino": "^10.4.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@ashian/config": "workspace:*",
+    "@types/node": "^24.10.0",
+    "eslint": "^9.39.0",
+    "pino-pretty": "^13.2.0",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.3"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "extends": "@ashian/config/tsconfig/library.json",
+  "compilerOptions": {
+    "rootDir": "."
+  },
+  "include": ["src", "vitest.config.ts"]
+}
